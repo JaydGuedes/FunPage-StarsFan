@@ -533,3 +533,16 @@ function openProfile() {
     sessionStorage.userId = userId
     loadpage('aboutus')
 }
+
+
+
+function typeWriter(elemento){
+    var textoArray = elemento.innerhtml.split('')
+    elemento.innerhtml = ''
+    textoArray.forEach((letra,i) => {
+        setTimeout(() => elemento.innerhtml += letra, 75 * i)
+    });
+}
+var descricao = document.querySelector('.digited');
+console.log(descricao)
+typeWriter(descricao);

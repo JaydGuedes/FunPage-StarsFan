@@ -1,15 +1,3 @@
-/**
- * FrontEndeiros 1.0
- * MIT License 2023 By Jaydee
- **/
-
-/**
- * Folhas de estilo do template do site.
- **/
-
-/******************************************************************/
-/* Importa algumas bibliotecas externas para agilizar o trabalho. */
-/******************************************************************/
 
 /**
  * Fonte Roboto do "Google Fonts".
@@ -76,6 +64,9 @@ body {
     width: 9rem;
     height:6rem;
 }
+.digited{
+    color: azure;
+}
 
 a {
     color: #4682b4;
@@ -91,10 +82,8 @@ a:hover {
 
 body {
     background-attachment: fixed;
-    background-color: #000059;
     background-image: url('/assets/uma-janela-com-um-planeta-no-meio.jpg');
-    background-position: center;
-    background-repeat: no-repeat;
+    background-position: center;  
     background-size: cover;
 }
 
@@ -110,11 +99,6 @@ body {
     /* Largura maxima do conteúdo da página. */
     max-width: 1054px;
 }
-
-/*********************/
-/* Cabeçalho do tema */
-/*********************/
-
 #wrap>header {
     display: flex;
     align-items: center;
@@ -123,19 +107,6 @@ body {
     margin: 0.5rem;
     justify-content: center;
 }
-
-#wrap>header a {
-    -webkit-text-stroke: .5px #ffffff;
-    color: #ffa500;
-    font-size: 3rem;
-    padding: 0.5rem 1rem 0.5rem 0.5rem;
-    text-decoration: none;
-}
-
-#wrap>header i {
-    display: block;
-}
-
 #wrap>header h1 {
     color: #ffffff;
     font-size: 1.5rem;
@@ -181,29 +152,6 @@ body {
     height: 30rem;
 
 }
-/*********/
-/* aside */
-/*********/
-
-main aside ul {
-    font-size: 95%;
-    padding: 0;
-    padding-left: 1rem;
-}
-
-main aside ul li {
-    margin-top: .25rem;
-}
-
-main aside ul li.article {
-    color: steelblue;
-    cursor: pointer;
-}
-
-main aside ul li.article:hover {
-    color: orangered;
-    text-decoration: underline;
-}
 
 /******************/
 /* Rodapé do tema */
@@ -242,15 +190,6 @@ main aside ul li.article:hover {
     height: .1px;
     margin: 0;
 }
-
-.center {
-    text-align: center;
-}
-.responsive {
-    max-width: 100%;
-    height: auto;
-}
-
 @media screen and (min-width: 480px) {
 
     /*********************/
@@ -293,21 +232,6 @@ main aside ul li.article:hover {
         margin-right: .5rem;
     }
 
-    #wrap>nav a img {
-        width: 1.2rem;
-        height: 1.2rem;
-        margin-bottom: 0;
-        margin-right: .5rem;
-    }
-
-    /******************/
-    /* Rodapé do tema */
-    /******************/
-
-    .footer-bottom ul {
-        padding-left: 1rem;
-    }
-
 }
 
 /**************************************************/
@@ -316,19 +240,8 @@ main aside ul li.article:hover {
 
 @media screen and (min-width: 768px) {
 
-    /************/
-    /* Conteúdo */
-    /************/
-
     #wrap>main {
         flex-direction: row;
-    }
-
-    #wrap>main>aside {
-        margin-left: .5rem;
-        margin-top: 0;
-        max-width: 220px;
-        min-width: 220px;
     }
 
 }
