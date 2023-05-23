@@ -1,5 +1,5 @@
 /**
- * FrontEndeiros 1.0
+ * FunPage 1.0
  * MIT License 2023 By Jaydee Guedes
  **/
 
@@ -122,14 +122,7 @@ function planet(id) {
         })
 
 }
-// formata id
-function rastreaId(urrl) {
-
-    var part = urrl.split('/')
-    var restId = part[5]
-    return restId
-}
-
+// base pra uso
 function planet(id) {
 
     var planetName = '';
@@ -177,6 +170,8 @@ function planet(id) {
         })
 
 }
+// base fimm
+
 // formata id
 function rastreaId(urrl) {
 
