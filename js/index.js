@@ -40,8 +40,8 @@ const app = {
  *  • https://www.w3schools.com/jquery/jquery_syntax.asp
  **/
 $(document).ready(myApp)
-
-function listaPerson() {
+// lista personagens na lista na area de seleção
+function myApp() {
 
     var listaPer = '<select class="listP" name="select"> <option value="0">Escolha um personagem</option>';
 
@@ -49,15 +49,125 @@ function listaPerson() {
         _order: 'desc'
     })
         .done((data) => {
-            data.forEach((art, i) => {
+            data.results.forEach((art, i) => {
+                var nId = rastreaId(art.url)
                 listaPer += `
-                    <div class="article art-item" data-id="${art.id}">
-                    <option value="valor1">Valor 1</option>
-                    </div>                    
+                    <option value="${nId}">${art.name}</option>                   
                 `
             })
             listaPer += '</select>';
-            $('#artList').html(articleList)
+            $('#artList').html(listaPer)
+
+            //getMostViewed()
+            //getLastComments()
+        })
+        .fail((error) => {
+            $('#artList').html('<p class="center">Oooops! Não encontramos nenhum personagem...</p>')
+        })
+
+}
+// busca dados de um unico personagem
+function umPerson(id) {
+
+    var person = '';
+
+    $.get(app.apiBaseURL + 'people/' + id + '/')
+        .done((data) => {
+            person += `
+                <div class="article art-item" data-id="${data.id}">
+                <h3>Nome: ${data.name}, 
+                Altura: ${data.height}, 
+                Peso: ${data.mass}, 
+                Cor do cabelo: ${data.hair_color}, 
+                Cor da pele: ${data.skin_color}, 
+                Cor dos olhos: ${data.eye_color}, 
+                Data de nascimento: ${data.birth_year}, 
+                Sexo: ${data.gender}, 
+                Planeta natal:  ${data.homeworld =! "n/a" ? planet(rastreaId(data.homeworld)) : "n/a"}, 
+                ${data.films}: [
+                "https://swapi.dev/api/films/1/", 
+                "https://swapi.dev/api/films/2/", 
+                "https://swapi.dev/api/films/3/", 
+                "https://swapi.dev/api/films/6/"
+                ], 
+                ${"species"}: [], 
+                ${"vehicles"}: [
+                "https://swapi.dev/api/vehicles/14/", 
+                "https://swapi.dev/api/vehicles/30/"
+                ], 
+                ${"starships"}: [
+                "https://swapi.dev/api/starships/12/", 
+                "https://swapi.dev/api/starships/22/"</h3>
+                </div>                    
+            `
+            $('#artList').html(person)
+        })
+        .fail((error) => {
+            $('#artList').html('<p class="center">Oooops! Não encontramos nada sobre esse personagem...</p>')
+        })
+
+}
+
+function planet(id) {
+
+    var planetName = '';
+
+    $.get(app.apiBaseURL + 'planets/' + id + '/')
+        .done((data) => {
+            planetName = data.name
+            return planetName
+        })
+        .fail((error) => {
+            $('#artList').html('<p class="center">Oooops! Não encontramos nada sobre o planeta...</p>')
+        })
+
+}
+// formata id
+function rastreaId(urrl) {
+
+    var part = urrl.split('/')
+    var restId = part[5]
+    return restId
+}
+
+function planet(id) {
+
+    var planetName = '';
+
+    $.get(app.apiBaseURL + 'people/' + id + '/')
+        .done((data) => {
+            planetName = data.name
+            data.results.forEach((art) => {
+                person += `
+                    <div class="article art-item" data-id="${art.id}">
+                    <h3>Nome: ${art.name}, 
+            Altura: ${art.height}, 
+            Peso: ${art.mass}, 
+            Cor do cabelo: ${art.hair_color}, 
+            Cor da pele: ${art.skin_color}, 
+            Cor dos olhos: ${art.eye_color}, 
+            Data de nascimento: ${art.birth_year}, 
+            Sexo: ${art.gender}, 
+            "homeworld": "https://swapi.dev/api/planets/1/", 
+            "films": [
+                "https://swapi.dev/api/films/1/", 
+                "https://swapi.dev/api/films/2/", 
+                "https://swapi.dev/api/films/3/", 
+                "https://swapi.dev/api/films/6/"
+            ], 
+            "species": [], 
+            "vehicles": [
+                "https://swapi.dev/api/vehicles/14/", 
+                "https://swapi.dev/api/vehicles/30/"
+            ], 
+            "starships": [
+                "https://swapi.dev/api/starships/12/", 
+                "https://swapi.dev/api/starships/22/"</h3>
+                    </div>                    
+                `
+            })
+            person += '';
+            $('#artList').html(person)
 
             getMostViewed()
             getLastComments()
@@ -67,7 +177,7 @@ function listaPerson() {
         })
 
 }
-
+// formata id
 function rastreaId(urrl) {
 
     var part = urrl.split('/')
@@ -76,10 +186,12 @@ function rastreaId(urrl) {
 }
 
 
+// lança letra por letra
 function typeWriter(elemento){
     var textoArray = elemento.innerhtml.split('')
     elemento.innerhtml = ''
     textoArray.forEach((letra,i) => {
+        if(letra == ',') letra = '<br>'
         setTimeout(() => elemento.innerhtml += letra, 75 * i)
     });
 }
