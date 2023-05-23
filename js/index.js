@@ -74,8 +74,8 @@ function umPerson(id) {
     $.get(app.apiBaseURL + 'people/' + id + '/')
         .done((data) => {
             person += `
-                <div class="digited" data-id="${data.id}">
-                <h3>Nome: ${data.name}, 
+                <div data-id="${data.id}">
+                <h3 id="digited">Nome: ${data.name}, 
                 Altura: ${data.height}, 
                 Peso: ${data.mass}, 
                 Cor do cabelo: ${data.hair_color}, 
