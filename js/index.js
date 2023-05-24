@@ -56,7 +56,7 @@ function myApp() {
                 `
             })
             listaPer += '</select>';
-            $('#').html(listaPer)
+            $('.testett').html(listaPer)
 
             //getMostViewed()
             //getLastComments()
