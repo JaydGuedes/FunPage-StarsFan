@@ -43,7 +43,7 @@ body {
 }
 
 /* Links em geral */
-.testett{    
+.testet{    
     display: flex;
     flex-direction: column;
     background-image: url('/assets/sem.jpg');

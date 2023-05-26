@@ -56,7 +56,9 @@ function myApp() {
                 `
             })
             listaPer += '</select>';
+            console.log(listaPer)
             $('.testett').html(listaPer)
+
 
             //getMostViewed()
             //getLastComments()
@@ -90,7 +92,8 @@ function umPerson(id) {
                 Naves: ${data.starships.length =! 0 ? nave(data.starships) : "n/a"} </h3>
                 </div>                    
             `
-            $('#artList').html(person)
+            console.log(person)
+            $('#corpo').html(person)
         })
         .fail((error) => {
             $('#artList').html('<p class="center">Oooops! Não encontramos nada sobre esse personagem...</p>')
