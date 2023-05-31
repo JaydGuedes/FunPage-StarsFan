@@ -41,9 +41,10 @@ const app = {
  **/
 $(document).ready(myApp)
 // lista personagens na lista na area de seleção
+
 function myApp() {
 
-    var listaPer = '<select class="listP" name="select"> <option value="0">Escolha um personagem</option>';
+    var listaPer = '<option value="0">Escolha um personagem</option>';
 
     $.get(app.apiBaseURL + 'people/', {
         _order: 'desc'
@@ -55,16 +56,28 @@ function myApp() {
                     <option value="${nId}">${art.name}</option>                   
                 `
             })
-            listaPer += '</select>';
+            listaPer += '';
             console.log(listaPer)
-            $('.testett').html(listaPer)
+            $('#listP').html(listaPer)
+
+            var elTexto
+            var persona;
 
 
+                document.querySelector('#botao').addEventListener('click', function (e) {
+                e.preventDefault();
+                    elTexto = document.querySelectorAll('#listP');
+                    persona = elTexto[0].value;
+                    console.log(persona)
+                    umPerson(persona)
+                })
+
+            
             //getMostViewed()
             //getLastComments()
         })
         .fail((error) => {
-            $('#artList').html('<p class="center">Oooops! Não encontramos nenhum personagem...</p>')
+            $('#listP').html('<p class="center">Oooops! Não encontramos nenhum personagem...</p>')
         })
 
 }
@@ -96,7 +109,7 @@ function umPerson(id) {
             $('#corpo').html(person)
         })
         .fail((error) => {
-            $('#artList').html('<p class="center">Oooops! Não encontramos nada sobre esse personagem...</p>')
+            $('#corpo').html('<p class="center">Oooops! Não encontramos nada sobre esse personagem...</p>')
         })
 
 }
@@ -111,7 +124,7 @@ function planet(id) {
             return planetName
         })
         .fail((error) => {
-            $('#artList').html('<p class="center">Oooops! Não encontramos nada sobre o planeta...</p>')
+            $('#corpo').html('<p class="center">Oooops! Não encontramos nada sobre o planeta...</p>')
         })
 
 }
@@ -130,10 +143,11 @@ function film(listaFilmes) {
                 return filmList                
             })
             
-    })
+    
         .fail((error) => {
-            $('#artList').html('<p class="center">Oooops! Não encontramos filmes...</p>')
+            $('#corpo').html('<p class="center">Oooops! Não encontramos filmes...</p>')
         })
+    })
 
 }
 // busca espécies
@@ -153,7 +167,7 @@ function especie(listEspecie) {
             
     })
         .fail((error) => {
-            $('#artList').html('<p class="center">Oooops! Não encontramos a espécie...</p>')
+            $('#corpo').html('<p class="center">Oooops! Não encontramos a espécie...</p>')
         })
 
 }
@@ -175,7 +189,7 @@ function veiculo(listVeiculos) {
             
     })
         .fail((error) => {
-            $('#artList').html('<p class="center">Oooops! Não encontramos veículos...</p>')
+            $('#corpo').html('<p class="center">Oooops! Não encontramos veículos...</p>')
         })
 
 }
@@ -196,7 +210,7 @@ function nave(listNaves) {
             
     })
         .fail((error) => {
-            $('#artList').html('<p class="center">Oooops! Não encontramos naves...</p>')
+            $('#corpo').html('<p class="center">Oooops! Não encontramos naves...</p>')
         })
 
 }
@@ -211,18 +225,18 @@ function rastreaId(urrl) {
 
 
 // lança letra por letra
-function typeWriter(elemento){
-    var textoArray = elemento.innerhtml.split('')
-    elemento.innerhtml = ''
-    textoArray.forEach((letra,i) => {
-        if(letra == ',') letra = '<br>'
-        if(letra == '&') letra = '; <br> '
-        setTimeout(() => elemento.innerhtml += letra, 75 * i)
-    });
-}
-var descricao = document.querySelector('#digited');
-console.log(descricao)
-typeWriter(descricao);
+//function typeWriter(elemento){
+ //   var textoArray = elemento.innerhtml.split(' ')
+  //  elemento.innerhtml = ''
+  //  textoArray.forEach((letra,i) => {
+  //      if(letra == ',') letra = '<br>'
+   //     if(letra == '&') letra = '; <br> '
+   //     setTimeout(() => elemento.innerhtml += letra, 75 * i)
+  //  });
+//}
+//var descricao = document.querySelector('#digited');
+//console.log(descricao)
+//typeWriter(descricao);
 
 /**
  * funcao pra achar n itens name
