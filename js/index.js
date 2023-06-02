@@ -88,8 +88,9 @@ function umPerson(id) {
 
     $.get(app.apiBaseURL + 'people/' + id + '/')
         .done((data) => {
+            plant = data.homeworld != "n/a" ? planet(data.homeworld) : "n/a";
             person += `
-                <div data-id="${data.id}">
+                <div data-id="${id}">
                 <h3 id="digited">Nome: ${data.name}, 
                 Altura: ${data.height}, 
                 Peso: ${data.mass}, 
@@ -98,15 +99,16 @@ function umPerson(id) {
                 Cor dos olhos: ${data.eye_color}, 
                 Data de nascimento: ${data.birth_year}, 
                 Sexo: ${data.gender}, 
-                Planeta natal:  ${data.homeworld =! "n/a" ? planet(rastreaId(data.homeworld)) : "n/a"}, 
-                Participou dos filmes: ${data.films.length =! 0 ? film(data.films) : "n/a"}, 
-                Espécie: ${data.species.length =! 0 ? especie(data.species) : "n/a"}, 
-                Veículos: ${data.vehicles.length =! 0 ? veiculo(data.vehicles) : "n/a"},
-                Naves: ${data.starships.length =! 0 ? nave(data.starships) : "n/a"} </h3>
+                Planeta natal:  <span id="plant"></span>, 
+                Participou dos filmes: ${data.films.length != 0 ? film(data.films) : "n/a"}, 
+                Espécie: ${data.species.length != 0 ? especie(data.species) : "n/a"}, 
+                Veículos: ${data.vehicles.length != 0 ? veiculo(data.vehicles) : "n/a"},
+                Naves: ${data.starships.length != 0 ? nave(data.starships) : "n/a"} </h3>
                 </div>                    
-            `
+            `            
             console.log(person)
             $('#corpo').html(person)
+            planet(data.homeworld)
         })
         .fail((error) => {
             $('#corpo').html('<p class="center">Oooops! Não encontramos nada sobre esse personagem...</p>')
@@ -114,38 +116,50 @@ function umPerson(id) {
 
 }
 
-function planet(id) {
-
+function planet(plant) {
+    var id = "";
     var planetName = '';
 
-    $.get(app.apiBaseURL + 'planets/' + id + '/')
+    if(plant != "n/a"){
+        id = rastreaId(plant);
+        $.get(app.apiBaseURL + 'planets/' + id + '/')
         .done((data) => {
-            planetName = data.name
-            return planetName
+                planetName = data.name
+                console.log(planetName)
+                //return planetName
+                
         })
         .fail((error) => {
-            $('#corpo').html('<p class="center">Oooops! Não encontramos nada sobre o planeta...</p>')
+            planetName += " Oooops! Não encontramos nada sobre o planeta..."
+            return planetName
         })
-
+    }
+    else{
+        var planetName = "n/a";
+    }
+    $('#plant').html(planetName)
 }
+
 // busca os filmes que participou
 function film(listaFilmes) {
 
     var filmList = '';
     listaFilmes.forEach((art, i) => {    
 
-        $.get(app.apiBaseURL + 'films/' + rastreaId(art) + '/')
+        $.get(art)
             .done((data) => {
-                if (i == listaFilmes.length){
-                filmList += `${data.title} .`}
+                if (i < listaFilmes.length-1){
+                filmList += `${data.title} & `}
                 else{
-                filmList += `${data.title} &`}
-                return filmList                
+                    filmList += `${data.title} .`
+                    console.log(filmList)
+                    return filmList}           
             })
             
     
         .fail((error) => {
-            $('#corpo').html('<p class="center">Oooops! Não encontramos filmes...</p>')
+            filmList += "Oooops! Não encontramos filmes..."
+            return filmList
         })
     })
 
@@ -156,19 +170,22 @@ function especie(listEspecie) {
     var especieList = '';
     listEspecie.forEach((art, i) => {    
 
-        $.get(app.apiBaseURL + 'species/' + rastreaId(art) + '/')
+        $.get(art)
             .done((data) => {
-                if (i == listEspecie.length){
-                    especieList += `${data.title} .`}
+                if (i < listEspecie.length-1){
+                    especieList += `${data.title} & `}
                 else{
-                    especieList += `${data.title} &`}
-                return especieList                
+                    especieList += `${data.title} .`
+                    console.log(especieList)
+                    return especieList}          
             })
             
-    })
+   
         .fail((error) => {
-            $('#corpo').html('<p class="center">Oooops! Não encontramos a espécie...</p>')
+            especieList += "Oooops! Não encontramos a espécie..."
+            return especieList
         })
+    })
 
 }
 // busca veiculos
@@ -176,43 +193,51 @@ function especie(listEspecie) {
 function veiculo(listVeiculos) {
 
     var veiculoList = '';
-    listVeiculos.forEach((art, i) => {    
+    console.log(listVeiculos)
+    listVeiculos.forEach((art, i) => {  
+        console.log(art)  
 
-        $.get(app.apiBaseURL + 'vehicles/' + rastreaId(art) + '/')
+        $.get(art)
             .done((data) => {
-                if (i == listVeiculos.length){
-                    veiculoList += `${data.title} .`}
+                if (i < listVeiculos.length-1){
+                    veiculoList += `${data.title} & `}
                 else{
-                    veiculoList += `${data.title} &`}
-                return veiculoList                
+                    veiculoList += `${data.title} .`
+                    console.log(veiculoList)
+                    return veiculoList}
             })
             
-    })
+    
         .fail((error) => {
-            $('#corpo').html('<p class="center">Oooops! Não encontramos veículos...</p>')
+            veiculoList += "Oooops! Não encontramos veículos..."
+            return veiculoList 
         })
+    })
 
 }
 // Busca naves
 function nave(listNaves) {
 
     var navesList = '';
-    listNaves.forEach((art, i) => {    
+    listNaves.forEach((art, i) => {   
+        console.log(art) 
 
-        $.get(app.apiBaseURL + 'starships/' + rastreaId(art) + '/')
+        $.get(art)
             .done((data) => {
-                if (i == listNaves.length){
-                    navesList += `${data.title} .`}
+                if (i < listNaves.length-1){
+                    navesList += `${data.title} & `}
                 else{
-                    navesList += `${data.title} &`}
-                return navesList                
+                    navesList += `${data.title} .`
+                    console.log(navesList)
+                    return navesList}             
             })
             
-    })
+    
         .fail((error) => {
-            $('#corpo').html('<p class="center">Oooops! Não encontramos naves...</p>')
+            navesList += "Oooops! Não encontramos naves..."
+            return navesList
         })
-
+    })
 }
 
 // formata id
